@@ -3,12 +3,19 @@
   display: inline-block;
   border: 5px solid black;
 }
+
+body {
+  justify-content: center;
+  align-self: center;
+}
+
 .grid {
   display: grid;
   height: 500px;
   width: 500px;
   grid-gap: 1px;
 }
+
 .cell {
    /* center the cell content */
   justify-content: center;
