@@ -4,9 +4,9 @@
   border: 5px solid black;
 }
 
-body {
-  justify-content: center;
-  align-self: center;
+.button-container {
+justify-items: center;
+align-items: center;
 }
 
 .grid {
