@@ -1,4 +1,17 @@
-function Book(title, author, pages, read) {
+let library = []
+let theHobbit = new Book('The Hobbit', 'J.R.R Tolkien', 310, false);
+let songOfAchiles = new Book('The Song of Achilles', 'Madeline Miller', 416, true)
+let deadhouseGates = new Book('Deadhouse Gates', 'Steven Erikson', 943, true);
+let bible = new Book('Bible', 'God', 666, false);
+
+addBooktoLibrary(theHobbit)
+addBooktoLibrary(songOfAchiles)
+addBooktoLibrary(deadhouseGates)
+addBooktoLibrary(bible)
+
+displayBooks(library);
+
+function Book(title, author, pages, read = false) {
     this.title = title;
     this.author = author;
     this.pages = pages;
@@ -11,6 +24,7 @@ function Book(title, author, pages, read) {
     }
 }
 
+
 function addBooktoLibrary (book) {
     library.push(book)
 }
@@ -22,8 +36,8 @@ function updateDisplay() {
 
 function clearFields() {
     const fields = document.querySelectorAll('input');
-    for (const field in fields) {
-        field.value = '';
+    for (let i = 0; i <fields.length; i++) {
+        fields[i].value = '';
     }
 }
 
@@ -41,13 +55,13 @@ function displayBooks (library) {
             readButton.innerHTML = 'Mark as unread'    
         } else { readButton.innerHTML = 'Mark as read'};
         readButton.id = i;
-        readButton.className = 'button readButton';
+        readButton.className = 'readButton button';
         card.appendChild(readButton);
         // add a 'remove from library' button
         const deleteButton = document.createElement('button');
         deleteButton.innerHTML = 'Remove'
         deleteButton.id = i;
-        deleteButton.className = 'button deleteButton';
+        deleteButton.className = 'deleteButton button';
         card.appendChild(deleteButton);
         container.appendChild(card);
     }
@@ -65,33 +79,27 @@ cancelButton.addEventListener('click', () => {
 })
 
 
-
 const submitButton = document.getElementById('submit')
 submitButton.addEventListener('click', () => {
     const inputFields = document.querySelectorAll('input')
-    for (const field in inputFields) {
-        if (field == '') {
+    for (let i = 0; i < inputFields.length; i ++) {
+        if (inputFields[i].value == '') {
             alert('fill in all the details before submitting')
             return;
-        }
+        } 
+    }
     const newBook = new Book(inputFields[0].value, inputFields[1].value, inputFields[2].value, inputFields[3].value);
     addBooktoLibrary(newBook);
     document.querySelector('#input-field').style.display = 'none'
     addNewButton.style.display = 'inline-block';
     clearFields()
     updateDisplay();
-    }
 })
 
-let library = []
-let theHobbit = new Book('The Hobbit', 'J.R.R Tolkien', 310, false);
-let songOfAchiles = new Book('The Song of Achilles', 'Madeline Miller', 416, true)
-let deadhouseGates = new Book('Deadhouse Gates', 'Steven Erikson', 943, true);
-let bible = new Book('Bible', 'God', 666, false);
-
-addBooktoLibrary(theHobbit)
-addBooktoLibrary(songOfAchiles)
-addBooktoLibrary(deadhouseGates)
-addBooktoLibrary(bible)
-
-displayBooks(library);
+const readUnread = document.querySelectorAll('.readButton')
+document.querySelectorAll
+readUnread.forEach( (btn) => {
+    btn.addEventListener('click', () => {
+        library[btn.id].read = !library[btn.id].read;
+        updateDisplay();
+})})
