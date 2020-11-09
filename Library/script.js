@@ -96,10 +96,22 @@ submitButton.addEventListener('click', () => {
     updateDisplay();
 })
 
+
+
+
+function updateStatus (index) {
+    library[index].read = !library[index].read;
+    updateDisplay();
+    
+}
+
+// ONLY WORKS ONCE FOR SOME REASON. issue is with the button event listener, not the function.
 const readUnread = document.querySelectorAll('.readButton')
-document.querySelectorAll
 readUnread.forEach( (btn) => {
     btn.addEventListener('click', () => {
-        library[btn.id].read = !library[btn.id].read;
-        updateDisplay();
+        console.log(`before: ${library[btn.id].read}`)
+        updateStatus(btn.id);
+        // library[btn.id].read = !library[btn.id].read;
+        console.log(`after: ${library[btn.id].read}`)
+        // updateDisplay();
 })})
