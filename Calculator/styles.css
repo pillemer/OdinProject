@@ -1,0 +1,71 @@
+body {
+    background-color: black;
+}
+
+#container {
+    height: 550px;
+    width: 1000px;
+    background-color: rgb(228, 237, 100);
+    margin: 50px auto;
+}
+
+#calculator {
+    background-color: grey;
+    height: 500px;
+    width: 335px;
+    margin: 0 auto;
+    top: 20px;
+    position: relative;
+    border-radius: 10px;
+}
+
+#result {
+    background-color: peachpuff;
+    text-align: right;
+    height: 100px;
+}
+
+#operator-value {
+    font-weight: bolder;
+    text-align: left;
+    font-size: 20px;
+}
+
+#history {
+    height: 20px;
+    margin: 0 20px;
+    padding-top: 10px;
+    font-size: 15px;
+    color: rgb(56, 59, 59);
+}
+#output {
+    height: 60px;
+    margin: 10px, 20px;
+    font-size: 30px;
+}
+
+#buttonPad {
+    height: 400px;
+}
+
+.btn {
+    height: 50px;
+    width: 50px;
+    margin: 15px;
+    border-radius: 50px;
+    border-width: 0cm;
+    font-weight: bold;
+    font-size: 30px;
+}
+
+.operator {
+    background-color: lightskyblue;
+}
+
+.clear {
+    background-color: orange;
+}
+
+.empty {
+    visibility: hidden;
+}
