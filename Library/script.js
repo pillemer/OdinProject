@@ -45,7 +45,9 @@ function displayBooks (library) {
         const card = document.createElement('div');
         card.title = i;
         card.id = 'card'
-        card.innerHTML = `"${currentBook.title}"<br><br>${currentBook.author}<br><br>${currentBook.pages} pages<br>`
+        const contents = document.createElement('div');
+        contents.className = 'content';
+        contents.innerHTML = `"${currentBook.title}"<br><br>${currentBook.author}<br><br>${currentBook.pages} pages<br>`
         // add a 'mark as read/unread' button
         const readButton = document.createElement('button');
         if ((currentBook).read){
@@ -62,7 +64,8 @@ function displayBooks (library) {
                 readButton.innerHTML = 'Mark as read'
             };
         })
-        card.appendChild(readButton);
+
+        contents.appendChild(readButton);
         // add a 'remove from library' button
         const deleteButton = document.createElement('button');
         deleteButton.innerHTML = 'Remove'
@@ -72,7 +75,8 @@ function displayBooks (library) {
             library.splice(i, 1)
             updateDisplay();
         })
-        card.appendChild(deleteButton);
+        contents.appendChild(deleteButton);
+        card.appendChild(contents)
         container.appendChild(card);
     }
 }
