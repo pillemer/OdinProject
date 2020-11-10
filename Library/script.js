@@ -1,14 +1,17 @@
 let library = []
-let theHobbit = new Book('The Hobbit', 'J.R.R Tolkien', 310, false);
-let songOfAchiles = new Book('The Song of Achilles', 'Madeline Miller', 416, true)
-let deadhouseGates = new Book('Deadhouse Gates', 'Steven Erikson', 943, true);
-let bible = new Book('Bible', 'God', 666, false);
 
-addBooktoLibrary(theHobbit)
-addBooktoLibrary(songOfAchiles)
-addBooktoLibrary(deadhouseGates)
-addBooktoLibrary(bible)
+// test values 
+let theHobbit = new Book('The Hobbit', 'Brandon Sanderson', 310, false);
+let songOfAchiles = new Book('The Song of Achilles', 'J.R.R Tolkien', 416, true)
+let deadhouseGates = new Book('Deadhouse Gates', 'Madeline Miller', 943, true);
+let bible = new Book('The Bible', 'God', 666, false);
 
+library.push(theHobbit)
+library.push(songOfAchiles)
+library.push(deadhouseGates)
+library.push(bible)
+
+// book constructor
 function Book(title, author, pages, read = false) {
     this.title = title;
     this.author = author;
@@ -19,11 +22,7 @@ function Book(title, author, pages, read = false) {
     }
 }
 
-displayBooks(library);
-
-function addBooktoLibrary (book) {
-    library.push(book)
-}
+displayBooks(library); // initial display
 
 function updateDisplay() {
     document.querySelector('#container').innerHTML = '';
@@ -32,8 +31,9 @@ function updateDisplay() {
 
 function clearFields() {
     const fields = document.querySelectorAll('input');
-    for (let i = 0; i <fields.length; i++) {
+    for (let i = 0; i <fields.length-1; i++) {
         fields[i].value = '';
+    fields[fields.length - 1].checked = false;
     }
 }
 
@@ -45,7 +45,7 @@ function displayBooks (library) {
         const card = document.createElement('div');
         card.title = i;
         card.id = 'card'
-        card.innerHTML = `"${currentBook.title}"<br>by ${currentBook.author}<br> ${currentBook.pages} pages long<br>`
+        card.innerHTML = `"${currentBook.title}"<br><br>${currentBook.author}<br><br>${currentBook.pages} pages<br>`
         // add a 'mark as read/unread' button
         const readButton = document.createElement('button');
         if ((currentBook).read){
@@ -76,6 +76,7 @@ function displayBooks (library) {
         container.appendChild(card);
     }
 }
+
 const addNewButton = document.getElementById('addNew')
 addNewButton.addEventListener('click', () => {
     document.querySelector('#input-field').style.display = 'inline-block'
@@ -88,18 +89,17 @@ cancelButton.addEventListener('click', () => {
     addNewButton.style.display = 'inline-block';
 })
 
-
 const submitButton = document.getElementById('submit')
 submitButton.addEventListener('click', () => {
     const inputFields = document.querySelectorAll('input')
-    for (let i = 0; i < inputFields.length; i ++) {
+    for (let i = 0; i < inputFields.length - 1; i ++) {
         if (inputFields[i].value == '') {
             alert('fill in all the details before submitting')
             return;
         } 
     }
-    const newBook = new Book(inputFields[0].value, inputFields[1].value, inputFields[2].value, inputFields[3].value);
-    addBooktoLibrary(newBook);
+    const newBook = new Book(inputFields[0].value, inputFields[1].value, inputFields[2].value, inputFields[3].checked);
+    library.push(newBook); // add book to library
     document.querySelector('#input-field').style.display = 'none'
     addNewButton.style.display = 'inline-block';
     clearFields()

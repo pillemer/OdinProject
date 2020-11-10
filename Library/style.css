@@ -1,21 +1,16 @@
 body {
     background-color: rgb(173, 173, 173);
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
 }
 
-#container {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 30px;
-    font-size: 30px;
-}
 p {
     color: white;
     text-shadow: 2px 2px 4px #000000;
     font-size: 50px;
     font-weight: bold;
     text-align: justify;
-    padding-right: 100px;
-    padding-left: 100px;
+    padding-right: 150px;
+    padding-left: 150px;
 }
 span {
     width:100%;
@@ -24,35 +19,45 @@ span {
 }
 
 
+#container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 30px;
+    font-size: 30px;
+}
+
 #card {
+    display: flex;
+    flex-direction: column;
     padding-top: 30px;
-    height: 200px;
+    height: 300px;
+    width: 250px;
     text-align: center;
-    background-color: rgb(114, 114, 114);
+    background-color: rgb(223, 223, 223);
     box-shadow: 0 4px 8px ;
     position: relative;
 }
 
-.button {
-    box-shadow: 5px 5px 5px 0 rgba(0, 0, 0, 0.2);
+button {
+    background-color: tomato;
+    border-style: none;
+    box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
 }
 
 .readButton {
     background-color: rgb(107, 201, 207);
-    border-style: hidden;
     position: absolute;
     bottom: 20px;
     right: 20px;
-    border-radius: 5px;
 }
 
 .deleteButton {
     background-color: lightpink;
-    border-style: hidden;
     position: absolute;
     bottom: 20px;
     left: 20px;
-    border-radius: 5px;
 }
 
 #input-field {
