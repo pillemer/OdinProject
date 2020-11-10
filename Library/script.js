@@ -9,21 +9,17 @@ addBooktoLibrary(songOfAchiles)
 addBooktoLibrary(deadhouseGates)
 addBooktoLibrary(bible)
 
-displayBooks(library);
-
 function Book(title, author, pages, read = false) {
     this.title = title;
     this.author = author;
     this.pages = pages;
     this.read = read; 
     this.info = function() {
-        string = `"${title}" by ${author}, ${pages} pages long, `
-        if (read) {
-            return `${string}read.`
-        } else {return `${string}not read yet.`}
+        return [title, author, pages, read]
     }
 }
 
+displayBooks(library);
 
 function addBooktoLibrary (book) {
     library.push(book)
@@ -47,21 +43,35 @@ function displayBooks (library) {
     for (let i = 0; i < library.length; i++) {
         currentBook = library[i];
         const card = document.createElement('div');
+        card.title = i;
         card.id = 'card'
-        card.innerHTML = currentBook.info();
+        card.innerHTML = `"${currentBook.title}"<br>by ${currentBook.author}<br> ${currentBook.pages} pages long<br>`
         // add a 'mark as read/unread' button
         const readButton = document.createElement('button');
         if ((currentBook).read){
             readButton.innerHTML = 'Mark as unread'    
         } else { readButton.innerHTML = 'Mark as read'};
-        readButton.id = i;
+        readButton.id = `read${i}`;
         readButton.className = 'readButton button';
+        readButton.addEventListener('click', function() {
+            currentBook.read = !currentBook.read;
+            if (currentBook.read){
+                readButton.innerHTML = 'Mark as unread'    
+            } 
+            else { 
+                readButton.innerHTML = 'Mark as read'
+            };
+        })
         card.appendChild(readButton);
         // add a 'remove from library' button
         const deleteButton = document.createElement('button');
         deleteButton.innerHTML = 'Remove'
-        deleteButton.id = i;
+        deleteButton.id = `delete${i}`;
         deleteButton.className = 'deleteButton button';
+        deleteButton.addEventListener('click', function() {
+            library.splice(i, 1)
+            updateDisplay();
+        })
         card.appendChild(deleteButton);
         container.appendChild(card);
     }
@@ -95,23 +105,3 @@ submitButton.addEventListener('click', () => {
     clearFields()
     updateDisplay();
 })
-
-
-
-
-function updateStatus (index) {
-    library[index].read = !library[index].read;
-    updateDisplay();
-    
-}
-
-// ONLY WORKS ONCE FOR SOME REASON. issue is with the button event listener, not the function.
-const readUnread = document.querySelectorAll('.readButton')
-readUnread.forEach( (btn) => {
-    btn.addEventListener('click', () => {
-        console.log(`before: ${library[btn.id].read}`)
-        updateStatus(btn.id);
-        // library[btn.id].read = !library[btn.id].read;
-        console.log(`after: ${library[btn.id].read}`)
-        // updateDisplay();
-})})
