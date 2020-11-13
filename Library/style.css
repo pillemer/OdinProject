@@ -1,8 +1,10 @@
 body {
     background: url('wodd.png');
     background-size: auto;
+    /* font-family: 'Grenze', serif; */
+    /* font-family: 'Alfa Slab One', cursive;; */
     /* background-color: rgb(173, 173, 173); */
-    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    /* font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; */
 }
 
 p {
