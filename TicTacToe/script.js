@@ -1,19 +1,29 @@
 
 
 const displayGrid = (() => {
+    const GRIDSIZE = 3;
     const gridBox = document.querySelector('.grid');
-    for (let i = 0; i < 3; i++) {
-        for (let j = 0; j < 3; j++) {
+    for (let i = 0; i < GRIDSIZE; i++) {
+        for (let j = 0; j < GRIDSIZE; j++) {
             gridCell = document.createElement('button');
             gridCell.setAttribute('class', 'gridCell');
             gridCell.setAttribute('id', `${i}${j}`); 
             gridCell.addEventListener('click', () => {
-                board.placeMark(`${i}${j}`, 'X');
+                // place the active player mark on this cell
+                gamePlay.board.placeMark(`${i}${j}`, gamePlay.currentplayer.marker);
+                // check for a winner
+                if (gamePlay.checkForWinner(gamePlay.currentplayer.marker)) {
+                    gamePlay.gameOver();
+                }
+                // switch to next player (will cancel out if no mark placed)
+                gamePlay.switchPlayer();
             });
             gridBox.appendChild(gridCell)
         }
     }
 })();
+
+
 
 const gameBoard = () => {
     const gridCells = document.querySelectorAll('.gridCell')
@@ -21,22 +31,112 @@ const gameBoard = () => {
                 ['', '', ''],
                 ['', '', '']];
 
-    const state = () => {
-        console.log(board)
-    }
+    const getState = () => console.log(board);
 
     const placeMark = (index, marker) => {
         let i = index[0];
         let j = index[1];
-        board[i][j] = marker;
-        for (let i = 0; i < gridCells.length; i++) {
-            if (gridCells[i].id == index) {
-                gridCells[i].innerHTML = marker;
+        if (board[i][j] == '') {
+            board[i][j] = marker;
+            for (let i = 0; i < gridCells.length; i++) {
+                if (gridCells[i].id == index) {
+                    gridCells[i].innerHTML = marker;
+                }
             }
+        }
+        else {gamePlay.switchPlayer()} // keep active player the same if no mark made.
+    }
+
+    const clearMarks = () => {
+        for (let i = 0; i < gridCells.length; i++) {
+            gridCells[i].innerHTML = '';
         }
     }
 
-    return {state, placeMark}
+    return { getState, placeMark, clearMarks }
 }
 
-const board = gameBoard();
+const Player = (name, marker) => {
+    const move = () => {
+        console.log('some kind of move')
+    }
+
+    return {name, marker, move};
+}
+
+
+const gamePlay = (() => {
+    const gridCells = document.querySelectorAll('.gridCell')
+    let board = gameBoard();
+    let markers = ['X', 'O']
+    let human = Player('Human', markers[0])
+    let comp = Player('Computer', markers[1]);
+    let currentplayer = human;
+
+    const switchPlayer = () => {
+        if (gamePlay.currentplayer.name == human.name) {
+            gamePlay.currentplayer = comp;
+        } 
+        else {gamePlay.currentplayer = human;}
+    }
+
+    const gameOver = () => {
+        document.getElementById("overlay").style.display = "block";
+        document.getElementById('text').innerHTML = `GAME OVER! ${gamePlay.currentplayer.marker} WINS.`
+        }
+
+    const switchMarker = () => {
+        // does nothing at the moment
+        markers = markers.reverse()
+        gamePlay.newGame();
+    }
+
+    const newGame = () => {
+        gameBoard().clearMarks();
+        gamePlay.board = gameBoard()
+        human = Player('Human', markers[0])
+        comp = Player('Computer', markers[1]);
+        currentplayer = comp;
+        return {board, currentplayer}
+    };
+
+    const checkForWinner = (marker) => {
+        // check rows
+        for (let i = 0; i < gridCells.length; i += 3) {
+            if (gridCells[i].textContent == marker) {
+                if ((gridCells[i+1].textContent == marker) && (gridCells[i+2].textContent == marker)){
+                    return true;
+                }
+            }
+        }
+        // check columns
+        for (i = 0; i < 3; i++) {
+            if (gridCells[i].textContent == marker) {
+                if ((gridCells[i+3].textContent == marker) && (gridCells[i+6].textContent == marker)){
+                    return true;
+                }
+            } 
+        }
+        // check backslash diagonal
+        if (gridCells[0].textContent == marker) {
+            if ((gridCells[4].textContent == marker) && (gridCells[8].textContent == marker)){
+                return true;
+            }
+        } 
+        // check forwardslash diagonal
+        if (gridCells[2].textContent == marker) {
+            if ((gridCells[4].textContent == marker) && (gridCells[6].textContent == marker)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    return { board, currentplayer, switchPlayer, switchMarker, checkForWinner, gameOver, newGame}
+})();
+
+
+//overlay functions 
+function off() {
+    document.getElementById("overlay").style.display = "none";
+  }
