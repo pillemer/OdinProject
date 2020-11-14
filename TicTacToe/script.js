@@ -1,6 +1,3 @@
-let currentBoard = [['X', 'X', ''],
-                    ['O', 'X', 'O'],
-                    ['X', 'O', 'O']];
 
 
 const displayGrid = (() => {
@@ -8,15 +5,38 @@ const displayGrid = (() => {
     for (let i = 0; i < 3; i++) {
         for (let j = 0; j < 3; j++) {
             gridCell = document.createElement('button');
-            gridCell.setAttribute('data-index', `${i},${j}`); 
-            console.log(`creating a new button i=${i}, j=${j}`)
+            gridCell.setAttribute('class', 'gridCell');
+            gridCell.setAttribute('id', `${i}${j}`); 
             gridCell.addEventListener('click', () => {
-                console.log(`put the action taken when clicking a box here.`)
+                board.placeMark(`${i}${j}`, 'X');
             });
-            gridCell.innerHTML = currentBoard[i][j];
             gridBox.appendChild(gridCell)
         }
     }
 })();
 
+const gameBoard = () => {
+    const gridCells = document.querySelectorAll('.gridCell')
+    let board = [['', '', ''],
+                ['', '', ''],
+                ['', '', '']];
 
+    const state = () => {
+        console.log(board)
+    }
+
+    const placeMark = (index, marker) => {
+        let i = index[0];
+        let j = index[1];
+        board[i][j] = marker;
+        for (let i = 0; i < gridCells.length; i++) {
+            if (gridCells[i].id == index) {
+                gridCells[i].innerHTML = marker;
+            }
+        }
+    }
+
+    return {state, placeMark}
+}
+
+const board = gameBoard();
