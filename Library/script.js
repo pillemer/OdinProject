@@ -1,33 +1,41 @@
 let library = []
-let theHobbit = new Book('The Hobbit', 'J.R.R Tolkien', 310, false);
-let songOfAchiles = new Book('The Song of Achilles', 'Madeline Miller', 416, true)
-let deadhouseGates = new Book('Deadhouse Gates', 'Steven Erikson', 943, true);
-let bible = new Book('Bible', 'God', 666, false);
 
-addBooktoLibrary(theHobbit)
-addBooktoLibrary(songOfAchiles)
-addBooktoLibrary(deadhouseGates)
-addBooktoLibrary(bible)
-
-displayBooks(library);
-
-function Book(title, author, pages, read = false) {
-    this.title = title;
-    this.author = author;
-    this.pages = pages;
-    this.read = read; 
-    this.info = function() {
-        string = `"${title}" by ${author}, ${pages} pages long, `
-        if (read) {
-            return `${string}read.`
-        } else {return `${string}not read yet.`}
+// book Class
+class Book {
+    constructor(title, author, pages, read = false){
+        this.title = title;
+        this.author = author;
+        this.pages = pages;
+        this.read = read;
+    }
+    info() {
+        return [title, author, pages, read]
     }
 }
 
+// test values 
+let theHobbit = new Book('The Hobbit', 'Brandon Sanderson', 310, false);
+let songOfAchiles = new Book('The Song of Achilles', 'J.R.R Tolkien', 416, true)
+let deadhouseGates = new Book('Deadhouse Gates', 'Madeline Miller', 943, true);
+let bible = new Book('The Bible', 'God', 666, false);
 
-function addBooktoLibrary (book) {
-    library.push(book)
-}
+library.push(theHobbit)
+library.push(songOfAchiles)
+library.push(deadhouseGates)
+library.push(bible)
+
+// book constructor
+// function Book(title, author, pages, read = false) {
+//     this.title = title;
+//     this.author = author;
+//     this.pages = pages;
+//     this.read = read;
+//     this.info = function() {
+//         return [title, author, pages, read]
+//     }
+// }
+
+displayBooks(library); // initial display
 
 function updateDisplay() {
     document.querySelector('#container').innerHTML = '';
@@ -36,8 +44,9 @@ function updateDisplay() {
 
 function clearFields() {
     const fields = document.querySelectorAll('input');
-    for (let i = 0; i <fields.length; i++) {
+    for (let i = 0; i <fields.length-1; i++) {
         fields[i].value = '';
+    fields[fields.length - 1].checked = false;
     }
 }
 
@@ -47,25 +56,44 @@ function displayBooks (library) {
     for (let i = 0; i < library.length; i++) {
         currentBook = library[i];
         const card = document.createElement('div');
+        card.title = i;
         card.id = 'card'
-        card.innerHTML = currentBook.info();
+        const contents = document.createElement('div');
+        contents.className = 'content';
+        contents.innerHTML = `"${currentBook.title}"<br><br>${currentBook.author}<br><br>${currentBook.pages} pages<br>`
         // add a 'mark as read/unread' button
         const readButton = document.createElement('button');
         if ((currentBook).read){
             readButton.innerHTML = 'Mark as unread'    
         } else { readButton.innerHTML = 'Mark as read'};
-        readButton.id = i;
+        readButton.id = `read${i}`;
         readButton.className = 'readButton button';
-        card.appendChild(readButton);
+        readButton.addEventListener('click', function() {
+            currentBook.read = !currentBook.read;
+            if (currentBook.read){
+                readButton.innerHTML = 'Mark as unread'    
+            } 
+            else { 
+                readButton.innerHTML = 'Mark as read'
+            };
+        })
+
+        contents.appendChild(readButton);
         // add a 'remove from library' button
         const deleteButton = document.createElement('button');
         deleteButton.innerHTML = 'Remove'
-        deleteButton.id = i;
+        deleteButton.id = `delete${i}`;
         deleteButton.className = 'deleteButton button';
-        card.appendChild(deleteButton);
+        deleteButton.addEventListener('click', function() {
+            library.splice(i, 1)
+            updateDisplay();
+        })
+        contents.appendChild(deleteButton);
+        card.appendChild(contents)
         container.appendChild(card);
     }
 }
+
 const addNewButton = document.getElementById('addNew')
 addNewButton.addEventListener('click', () => {
     document.querySelector('#input-field').style.display = 'inline-block'
@@ -78,40 +106,19 @@ cancelButton.addEventListener('click', () => {
     addNewButton.style.display = 'inline-block';
 })
 
-
 const submitButton = document.getElementById('submit')
 submitButton.addEventListener('click', () => {
     const inputFields = document.querySelectorAll('input')
-    for (let i = 0; i < inputFields.length; i ++) {
+    for (let i = 0; i < inputFields.length - 1; i ++) {
         if (inputFields[i].value == '') {
             alert('fill in all the details before submitting')
             return;
         } 
     }
-    const newBook = new Book(inputFields[0].value, inputFields[1].value, inputFields[2].value, inputFields[3].value);
-    addBooktoLibrary(newBook);
+    const newBook = new Book(inputFields[0].value, inputFields[1].value, inputFields[2].value, inputFields[3].checked);
+    library.push(newBook); // add book to library
     document.querySelector('#input-field').style.display = 'none'
     addNewButton.style.display = 'inline-block';
     clearFields()
     updateDisplay();
 })
-
-
-
-
-function updateStatus (index) {
-    library[index].read = !library[index].read;
-    updateDisplay();
-    
-}
-
-// ONLY WORKS ONCE FOR SOME REASON. issue is with the button event listener, not the function.
-const readUnread = document.querySelectorAll('.readButton')
-readUnread.forEach( (btn) => {
-    btn.addEventListener('click', () => {
-        console.log(`before: ${library[btn.id].read}`)
-        updateStatus(btn.id);
-        // library[btn.id].read = !library[btn.id].read;
-        console.log(`after: ${library[btn.id].read}`)
-        // updateDisplay();
-})})
