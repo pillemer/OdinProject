@@ -1,5 +1,18 @@
 let library = []
 
+// book Class
+class Book {
+    constructor(title, author, pages, read = false){
+        this.title = title;
+        this.author = author;
+        this.pages = pages;
+        this.read = read;
+    }
+    info() {
+        return [title, author, pages, read]
+    }
+}
+
 // test values 
 let theHobbit = new Book('The Hobbit', 'Brandon Sanderson', 310, false);
 let songOfAchiles = new Book('The Song of Achilles', 'J.R.R Tolkien', 416, true)
@@ -12,15 +25,15 @@ library.push(deadhouseGates)
 library.push(bible)
 
 // book constructor
-function Book(title, author, pages, read = false) {
-    this.title = title;
-    this.author = author;
-    this.pages = pages;
-    this.read = read; 
-    this.info = function() {
-        return [title, author, pages, read]
-    }
-}
+// function Book(title, author, pages, read = false) {
+//     this.title = title;
+//     this.author = author;
+//     this.pages = pages;
+//     this.read = read;
+//     this.info = function() {
+//         return [title, author, pages, read]
+//     }
+// }
 
 displayBooks(library); // initial display
 

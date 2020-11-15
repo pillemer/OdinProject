@@ -1,0 +1,1 @@
+document.body.appendChild(function(){const n=document.createElement("div");return n.innerHTML="This is going to be a restaurant landing page",n}());
