@@ -1,14 +1,19 @@
 body {
+    text-align: center;
+    width: auto;
     font-family: sans-serif;
-    background-color: darkolivegreen;
+    background-color: darkslategrey;
+    color: deepskyblue;
 }
 
 h1 {
     font-size: 50px;
 }
 .container {
+    text-align: center;
     height: 300px;
     width: 300px;
+    margin: 0 auto;
 }
 
 .grid {

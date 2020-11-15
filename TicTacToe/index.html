@@ -10,8 +10,9 @@
     <h1>Tic-Tac-Toe</h1>
     <div class='container'>
         <button id='newGame' onclick="gamePlay.newGame()">New Game</button>
-        <button id='switchSides' onclick="gamePlay.switchMarker()">Switch sides</button>
-        <div id='overlay' onclick="off()"><div id='text'></div>
+        <button id='playerSelection' onclick="gamePlay.switchMarker()">Play as O</button>
+        <h2>Place your marker to start</h2>
+        <div id='overlay' onclick="gamePlay.off()"><div id='text'></div>
         </div>
         <div class='grid'>
         </div>

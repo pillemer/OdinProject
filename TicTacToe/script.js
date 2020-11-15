@@ -1,4 +1,8 @@
 
+// newgame switches markers for some reason?
+// make it prettier
+// add AI
+    // add option to play second against AI.
 
 const displayGrid = (() => {
     const GRIDSIZE = 3;
@@ -13,10 +17,13 @@ const displayGrid = (() => {
                 gamePlay.board.placeMark(`${i}${j}`, gamePlay.currentplayer.marker);
                 // check for a winner
                 if (gamePlay.checkForWinner(gamePlay.currentplayer.marker)) {
+                    document.querySelector('h2').textContent = 'Game Over'
                     gamePlay.gameOver();
+                    return;
                 }
                 // switch to next player (will cancel out if no mark placed)
                 gamePlay.switchPlayer();
+                document.querySelector('h2').textContent = `${gamePlay.currentplayer.marker}'s turn`
             });
             gridBox.appendChild(gridCell)
         }
@@ -52,15 +59,14 @@ const gameBoard = () => {
             gridCells[i].innerHTML = '';
         }
     }
-
     return { getState, placeMark, clearMarks }
 }
 
 const Player = (name, marker) => {
     const move = () => {
+        // does nothing as of yet
         console.log('some kind of move')
     }
-
     return {name, marker, move};
 }
 
@@ -85,8 +91,14 @@ const gamePlay = (() => {
         document.getElementById('text').innerHTML = `GAME OVER! ${gamePlay.currentplayer.marker} WINS.`
         }
 
+    const off = () => {
+        document.getElementById("overlay").style.display = "none";
+        document.querySelector('h2').textContent = 'Place your marker to start'
+        gamePlay.newGame();
+    }    
+
     const switchMarker = () => {
-        // does nothing at the moment
+        // does nothing as of yet
         markers = markers.reverse()
         gamePlay.newGame();
     }
@@ -96,7 +108,7 @@ const gamePlay = (() => {
         gamePlay.board = gameBoard()
         human = Player('Human', markers[0])
         comp = Player('Computer', markers[1]);
-        currentplayer = comp;
+        currentplayer = human;
         return {board, currentplayer}
     };
 
@@ -132,11 +144,5 @@ const gamePlay = (() => {
         return false;
     }
 
-    return { board, currentplayer, switchPlayer, switchMarker, checkForWinner, gameOver, newGame}
+    return { board, currentplayer, switchPlayer, switchMarker, checkForWinner, gameOver, newGame, off}
 })();
-
-
-//overlay functions 
-function off() {
-    document.getElementById("overlay").style.display = "none";
-  }
