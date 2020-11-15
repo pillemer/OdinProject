@@ -1,0 +1,45 @@
+body {
+    background-color: lightyellow;    
+}
+
+#content {
+    display: grid;
+    height: 100%;
+    width: 100%;
+    grid-template-rows: 1fr 2fr 3fr 10fr;
+    width: auto;
+}
+
+#navigation {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    column-gap: 0cm;
+}
+
+#navigation > button {
+    height: 100%;
+    width: 100%;
+    border-width: 0em;
+    background: lightyellow;
+}
+
+#logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: lemonchiffon;
+    font-size: 60px;
+    background-color: forestgreen;
+}
+
+#blurb {
+    display: flex;
+    align-items: center;
+    color: lemonchiffon;
+    font-size: 30px;
+    background-color: goldenrod;
+}
+
+#landing {
+    background-image: url(https://i.imgur.com/J7W549R.jpeg);
+}
