@@ -1,1 +1,1 @@
-document.body.appendChild(function(){const n=document.createElement("div");return n.innerHTML="This is going to be a footer with contact links and atribbution",n}());
+(()=>{const e=document.querySelector("#content"),t=document.createElement("div");t.id="navigation";const n=["HOME","PLATES","ABOUT","CONTACT"];for(let e=0;e<n.length;e++){const o=document.createElement("button");o.id=n[e].toLowerCase(),o.textContent=n[e],t.appendChild(o)}e.appendChild(t);const o=document.createElement("div");o.id="logo",o.textContent="( PLATE > SWITCH )",e.appendChild(o)})();
