@@ -1,12 +1,18 @@
+@font-face {
+    font-family: kindnrich;
+    src: url(kindnrich.otf);
+}
+
 body {
-    background-color: lightyellow;    
+    font-family: kindnrich;
+    background-image: linear-gradient(180deg, goldenrod 0%,  lightyellow 100%);
 }
 
 #content {
     display: grid;
     height: 100%;
     width: 100%;
-    grid-template-rows: 1fr 2fr 3fr 10fr;
+    grid-template-rows: 1fr 2fr 3fr 500px;
     width: auto;
 }
 
@@ -17,29 +23,41 @@ body {
 }
 
 #navigation > button {
+    font-family: kindnrich;
     height: 100%;
     width: 100%;
     border-width: 0em;
-    background: lightyellow;
+    background-color: inherit;
+    font-size: xx-large;
 }
+
+#navigation > button:hover {
+    border-radius: 20%;
+    background-color: rgba(218,165,32,0.9);
+}
+
 
 #logo {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: lemonchiffon;
-    font-size: 60px;
-    background-color: forestgreen;
+    color: forestgreen;
+    font-size: 100px;
 }
 
 #blurb {
     display: flex;
     align-items: center;
-    color: lemonchiffon;
-    font-size: 30px;
-    background-color: goldenrod;
+    justify-content: center;
+    /* text-align: justify;
+    text-justify: inter-word; */
+    font-size: 60px;
 }
 
 #landing {
-    background-image: url(https://i.imgur.com/J7W549R.jpeg);
+    background-repeat: no-repeat;
+    background-image: url(../img/ipad.jpg);
+    border-width: 3px;
+    border-style: solid;
+    background-blend-mode: luminosity;
 }
