@@ -1,22 +1,11 @@
-import plates from'./plates';
-import about from'./about';
-import contact from'./contact';
+import contact from './contact';
+import homepage from './homepage';
+import plates from './plates';
+import about from './about';
 
 
-function homepage() {
+const landing = () => {
     const content = document.querySelector('#content');
-    content.innerHTML = '';
-    navbarAndLogo();
-    const blurbText = 'Here at P>S we take pride in the art of (Food Presentation). Each dish is not only delicious and cooked to perfection, but is also a feast for the eyes and the hearts of art lovers everythwere.'
-    const blurbDiv = document.createElement('div');
-    blurbDiv.id = 'blurb';
-    blurbDiv.textContent = blurbText;
-    content.appendChild(blurbDiv)
-}
-
-function navbarAndLogo() {
-    const content = document.querySelector('#content');
-
     // create the navbar
     const navbar = document.createElement('div');
     navbar.id = 'navigation';
@@ -32,7 +21,7 @@ function navbarAndLogo() {
     }
     content.appendChild(navbar);
 
-    // create restaurant title
+    // add restaurant title
     const logo = "( PLATE > SWITCH )";
     const logoDiv = document.createElement('div');
     logoDiv.id = 'logo';
@@ -49,8 +38,9 @@ function loadTab(id) {
     }
     const content = document.querySelector('#content');
     content.innerHTML = '';
-    tabs[id]();
+    navbarAndLogo();
+    content.appendChild(tabs[id]())
 }
 
 
-export default homepage
+export default landing
